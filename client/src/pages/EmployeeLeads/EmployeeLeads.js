@@ -4,15 +4,15 @@ import './EmployeeLeads.css';
 
 const leadsData = [
   {
-    name: 'Deepak Kumar',
-    email: 'deepakroy7393@gmail.com',
+    name: 'Mayur Rastogi',
+    email: 'mayurrastogi46@gmail.com',
     date: 'April 04, 2025',
     status: 'Ongoing',
     statusColor: 'orange',
   },
   {
-   name: 'Deepak Kumar',
-    email: 'deepakroy7393@gmail.com',
+   name: 'Anushka Sharma',
+    email: 'anushkasharma@gmail.com',
     date: 'April 04, 2025',
     status: 'Ongoing',
     statusColor: 'yellow',

@@ -10,16 +10,16 @@ const Settings = () => {
                     <div className="form-row">
                         <div className="form-group">
                             <label htmlFor="first-name">First name</label>
-                            <input type="text" id="first-name" defaultValue="Deepak" />
+                            <input type="text" id="first-name" defaultValue="Mayur" />
                         </div>
                         <div className="form-group">
                             <label htmlFor="last-name">Last name</label>
-                            <input type="text" id="last-name" defaultValue="Kumar" />
+                            <input type="text" id="last-name" defaultValue="Rastogi" />
                         </div>
                     </div>
                     <div className="form-group">
                         <label htmlFor="email">Email</label>
-                        <input type="email" id="email" defaultValue="deepakroy7393@gmail.com" />
+                        <input type="email" id="email" defaultValue="mayurrastogi46@gmail.com" />
                     </div>
                     <div className="form-row">
                         <div className="form-group">

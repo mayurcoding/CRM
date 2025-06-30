@@ -8,9 +8,9 @@ import Employees from '../../pages/Employees/Employees';
 import Settings from '../../pages/Settings/Settings';
 
 const mockUser = {
-  firstName: 'Admin',
-  lastName: 'User',
-  email: 'admin@canovacrm.com',
+  firstName: 'Mayur',
+  lastName: 'Rastogi',
+  email: 'mayurrastogi46@gmail.com',
   role: 'admin',
   location: 'New York',
   preferredLanguage: 'English',
