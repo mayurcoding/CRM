@@ -1,33 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EmployeeLeads.css';
+import { FaInfoCircle } from 'react-icons/fa';
 
-const leadsData = [
-  {
-    name: 'Mayur Rastogi',
-    email: 'mayurrastogi46@gmail.com',
-    date: 'April 04, 2025',
-    status: 'Ongoing',
-    statusColor: 'orange',
-  },
-  {
-   name: 'Anushka Sharma',
-    email: 'anushkasharma@gmail.com',
-    date: 'April 04, 2025',
-    status: 'Ongoing',
-    statusColor: 'yellow',
-  },
-  {
-    name: 'Mishika Kapoor ',
-    email: 'mishikakapoor@gmail.com',
-    date: 'April 04, 2025',
-    status: 'Closed',
-    statusColor: 'gray',
-  },
+const initialLeadsData = [
+  { name: 'Mayur Rastogi', email: 'mayurrastogi46@gmail.com', date: 'April 04, 2025', time: '02:30 PM', status: 'Ongoing', statusColor: 'orange', type: 'Hot' },
+  { name: 'Anushka Sharma', email: 'anushkasharma@gmail.com', date: 'April 04, 2025', time: '02:30 PM', status: 'Ongoing', statusColor: 'yellow', type: 'Warm' },
+  { name: 'Mishika Kapoor ', email: 'mishikakapoor@gmail.com', date: 'April 04, 2025', time: '02:30 PM', status: 'Closed', statusColor: 'gray', type: 'Cold' },
 ];
+
+const typeColors = { Hot: '#ff9800', Warm: '#ffd600', Cold: '#00e5ff' };
 
 const EmployeeLeads = () => {
   const navigate = useNavigate();
+  const [leads, setLeads] = useState(initialLeadsData);
+  const [typeDropdown, setTypeDropdown] = useState(null); // index of open dropdown
+  const [editModal, setEditModal] = useState(null); // index of open modal
+  const [editDate, setEditDate] = useState('');
+  const [editTime, setEditTime] = useState('');
+  const [tooltip, setTooltip] = useState(null);
+  const [statusModal, setStatusModal] = useState(null);
+
+  const handleTypeClick = (idx) => setTypeDropdown(typeDropdown === idx ? null : idx);
+  const handleTypeSelect = (idx, type) => {
+    setLeads(leads => leads.map((l, i) => i === idx ? { ...l, type } : l));
+    setTypeDropdown(null);
+  };
+  const handleEditClick = (idx) => {
+    setEditModal(idx);
+    setEditDate(leads[idx].date.split(', ')[1]?.split('/')?.reverse().join('-') || '');
+    setEditTime(leads[idx].time || '');
+  };
+  const handleSave = (idx) => {
+    const dateStr = editDate ? new Date(editDate).toLocaleDateString('en-GB', { day: '2-digit', month: '2-digit', year: 'numeric' }) : leads[idx].date;
+    setLeads(leads => leads.map((l, i) => i === idx ? { ...l, date: dateStr, time: editTime } : l));
+    setEditModal(null);
+  };
+  const handleStatusClick = (idx) => setStatusModal(idx);
+  const closeStatusModal = () => setStatusModal(null);
+  const handleStatusHover = (idx) => setTooltip(idx);
+  const handleStatusLeave = () => setTooltip(null);
 
   return (
     <div className="employee-leads-page">
@@ -68,7 +80,7 @@ const EmployeeLeads = () => {
             </button>
           </div>
           <div className="leads-list">
-            {leadsData.map((lead, index) => (
+            {leads.map((lead, index) => (
               <div key={index} className="lead-card">
                 <div className="lead-card-indicator" style={{backgroundColor: lead.statusColor === 'gray' ? '#ccc' : lead.statusColor}}></div>
                 <div className="lead-info">
@@ -77,20 +89,60 @@ const EmployeeLeads = () => {
                   <div className="lead-date-container">
                     <span className="date-label">date</span>
                     <div className="lead-date">
-                      <span>🗓️</span> {lead.date}
+                      <span>🗓️</span> {lead.date} {lead.time && <span>{lead.time}</span>}
                     </div>
                   </div>
                 </div>
                 <div className="lead-status-and-actions">
-                  <div className={`status-ring status-${lead.statusColor}`}>
+                  {/* Type Dropdown */}
+                  <div className="type-dropdown-wrapper">
+                    <button className="type-btn" style={{background: typeColors[lead.type]}} onClick={() => handleTypeClick(index)}>{lead.type}</button>
+                    {typeDropdown === index && (
+                      <div className="type-dropdown">
+                        <div className="type-label">Type</div>
+                        {['Hot', 'Warm', 'Cold'].map(t => (
+                          <button key={t} className="type-pill" style={{background: typeColors[t]}} onClick={() => handleTypeSelect(index, t)}>{t}</button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  {/* Status Ring with Modal */}
+                  <div className={`status-ring status-${lead.statusColor}`}
+                    onClick={() => lead.status === 'Ongoing' && handleStatusClick(index)}
+                    style={{cursor: lead.status === 'Ongoing' ? 'pointer' : 'default'}}
+                  >
                     <span>{lead.status}</span>
                   </div>
+                  {/* Action Icons */}
                   <div className="action-icons">
-                    <button className="icon-btn">📝</button>
+                    <button className="icon-btn" onClick={() => handleEditClick(index)}>📝</button>
                     <button className="icon-btn">🕓</button>
                     <button className="icon-btn">✔️</button>
                   </div>
                 </div>
+                {/* Date/Time Modal */}
+                {editModal === index && (
+                  <div className="edit-modal">
+                    <label>Date<br/>
+                      <input type="text" placeholder="dd/mm/yy" value={editDate} onChange={e => setEditDate(e.target.value)} />
+                    </label>
+                    <label>Time<br/>
+                      <input type="text" placeholder="02:30PM" value={editTime} onChange={e => setEditTime(e.target.value)} style={{fontWeight: 'bold', letterSpacing: '2px'}} />
+                    </label>
+                    <button className="save-btn" onClick={() => handleSave(index)}>Save</button>
+                  </div>
+                )}
+                {/* Lead Status Modal */}
+                {statusModal === index && (
+                  <div className="status-modal">
+                    <label className="status-label">Lead Status <FaInfoCircle className="info-icon" onMouseEnter={() => handleStatusHover(index)} onMouseLeave={handleStatusLeave} /></label>
+                    <input type="text" value="Ongoing" disabled className="status-input" />
+                    {tooltip === index && (
+                      <div className="status-tooltip">Lead can not be closed</div>
+                    )}
+                    <button className="save-btn" onClick={closeStatusModal}>Save</button>
+                  </div>
+                )}
               </div>
             ))}
           </div>

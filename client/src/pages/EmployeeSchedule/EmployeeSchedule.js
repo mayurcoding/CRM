@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './EmployeeSchedule.css';
 
@@ -31,6 +31,25 @@ const scheduleData = [
 
 const EmployeeSchedule = () => {
   const navigate = useNavigate();
+  const [filterOpen, setFilterOpen] = useState(false);
+  const [filterValue, setFilterValue] = useState('Today');
+  const filterRef = useRef();
+
+  useEffect(() => {
+    function handleClickOutside(event) {
+      if (filterRef.current && !filterRef.current.contains(event.target)) {
+        setFilterOpen(false);
+      }
+    }
+    if (filterOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    } else {
+      document.removeEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [filterOpen]);
+
+  const handleFilterSave = () => setFilterOpen(false);
 
   return (
     <div className="employee-schedule-page">
@@ -63,9 +82,23 @@ const EmployeeSchedule = () => {
         <div className="schedule-list-container">
           <div className="search-container">
             <input type="text" placeholder="Search" />
-            <button className="filter-btn">
-              {/* SVG for filter icon */}
+            <button className="filter-btn" onClick={() => setFilterOpen(v => !v)}>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6h16M7 12h10M10 18h4" stroke="#333" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
             </button>
+            {filterOpen && (
+              <div className="filter-modal" ref={filterRef}>
+                <div className="filter-label">Filter</div>
+                <div className="filter-select-wrapper">
+                  <select className="filter-select" value={filterValue} onChange={e => setFilterValue(e.target.value)}>
+                    <option value="Today">Today</option>
+                    <option value="All">All</option>
+                  </select>
+                </div>
+                <button className="filter-save-btn" onClick={handleFilterSave}>Save</button>
+              </div>
+            )}
           </div>
           <div className="schedule-list">
             {scheduleData.map((item, index) => (

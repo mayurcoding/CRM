@@ -88,11 +88,32 @@ h2 {
 }
 
 .timing-toggle {
-    width: 40px;
-    height: 20px;
-    background-color: #e0e0e0;
-    border-radius: 10px;
-    position: relative;
+  width: 36px;
+  height: 56px;
+  background: #fff; /* always white */
+  border-radius: 16px;
+  border: 3px solid #3256e2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  box-sizing: border-box;
+  cursor: pointer;
+}
+.timing-toggle .toggle-indicator {
+  width: 20px;
+  height: 48px;
+  border-radius: 10px;
+  margin: 0 auto;
+  transition: background 0.3s;
+}
+.timing-toggle.checked-in .toggle-indicator {
+  background: #a6ff00; /* neon green */
+  box-shadow: 0 0 0 2px #a6ff00;
+}
+.timing-toggle.checked-out .toggle-indicator {
+  background: #f44336; /* red */
+  box-shadow: 0 0 0 2px #f44336;
 }
 
 .break-card .break-header {
