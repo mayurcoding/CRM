@@ -1,12 +1,11 @@
 import React from 'react';
 import './StatsCard.css';
 
-const StatsCard = ({ title, value, icon }) => {
+const StatsCard = ({ title, value, icon: Icon, iconBg }) => {
   return (
     <div className="stats-card">
-      <div className="stats-card-icon">
-        {/* Placeholder for an icon */}
-        <span className="icon-placeholder"></span>
+      <div className="stats-card-icon" style={{ background: iconBg }}>
+        {Icon && <Icon className="stats-icon" />}
       </div>
       <div className="stats-card-info">
         <p className="stats-card-title">{title}</p>

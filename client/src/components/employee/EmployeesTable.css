@@ -56,6 +56,23 @@
     font-size: 12px;
 }
 
+.employee-status-dot {
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #3ecf4a;
+    margin-right: 7px;
+    vertical-align: middle;
+}
+
+.employee-status-text {
+    color: #3ecf4a;
+    font-weight: 500;
+    font-size: 1em;
+    vertical-align: middle;
+}
+
 @media (max-width: 768px) {
     .employees-table-container {
         overflow-x: auto;

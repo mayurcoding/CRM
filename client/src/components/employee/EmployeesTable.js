@@ -1,7 +1,7 @@
 import React from 'react';
 import './EmployeesTable.css';
 
-const EmployeesTable = ({ employees = [] }) => {
+const EmployeesTable = ({ employees = [], showStatus }) => {
   if (!employees || employees.length === 0) {
     return (
       <div className="employees-table-container">
@@ -23,6 +23,8 @@ const EmployeesTable = ({ employees = [] }) => {
               <th>Location</th>
               <th>Language</th>
               <th>Assigned Leads</th>
+              <th>Closed Leads</th>
+              {showStatus && <th>Status</th>}
             </tr>
           </thead>
           <tbody>
@@ -33,6 +35,13 @@ const EmployeesTable = ({ employees = [] }) => {
                 <td>{employee.location}</td>
                 <td>{employee.preferredLanguage}</td>
                 <td>{employee.assignedLeads}</td>
+                <td>{employee.closedLeads}</td>
+                {showStatus && (
+                  <td>
+                    <span className="employee-status-dot" />
+                    <span className="employee-status-text">{employee.status}</span>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

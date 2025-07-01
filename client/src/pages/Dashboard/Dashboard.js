@@ -4,6 +4,7 @@ import StatsCard from '../../components/dashboard/StatsCard';
 import SalesAnalytics from '../../components/dashboard/SalesAnalytics';
 import RecentActivity from '../../components/dashboard/RecentActivity';
 import EmployeesTable from '../../components/employee/EmployeesTable';
+import { FaUserCheck, FaUserTie, FaUserFriends, FaChartLine } from 'react-icons/fa';
 
 const Dashboard = () => {
   // Mock data for demonstration
@@ -39,7 +40,9 @@ const Dashboard = () => {
       email: 'john.smith@canovacrm.com',
       location: 'New York',
       preferredLanguage: 'English',
-      assignedLeads: 5
+      assignedLeads: 5,
+      closedLeads: 2,
+      status: 'Active'
     },
     {
       _id: '2',
@@ -47,7 +50,9 @@ const Dashboard = () => {
       email: 'maria.garcia@canovacrm.com',
       location: 'Los Angeles',
       preferredLanguage: 'Spanish',
-      assignedLeads: 3
+      assignedLeads: 3,
+      closedLeads: 1,
+      status: 'Active'
     },
     {
       _id: '3',
@@ -55,7 +60,9 @@ const Dashboard = () => {
       email: 'david.chen@canovacrm.com',
       location: 'San Francisco',
       preferredLanguage: 'Mandarin',
-      assignedLeads: 8
+      assignedLeads: 8,
+      closedLeads: 3,
+      status: 'Active'
     },
     {
       _id: '4',
@@ -63,17 +70,19 @@ const Dashboard = () => {
       email: 'sarah.johnson@canovacrm.com',
       location: 'Chicago',
       preferredLanguage: 'English',
-      assignedLeads: 6
+      assignedLeads: 6,
+      closedLeads: 4,
+      status: 'Active'
     }
   ]);
 
   return (
     <div className="dashboard">
       <div className="stats-container">
-        <StatsCard title="Unassigned Leads" value={stats.unassignedLeads} />
-        <StatsCard title="Leads Assigned This Week" value={stats.leadsAssignedThisWeek} />
-        <StatsCard title="Active Salespeople" value={stats.activeSalespeople} />
-        <StatsCard title="Conversion Rate" value={stats.conversionRate} />
+        <StatsCard title="Unassigned Leads" value={stats.unassignedLeads} icon={FaUserCheck} iconBg="#e9f0fb" />
+        <StatsCard title="Leads Assigned This Week" value={stats.leadsAssignedThisWeek} icon={FaUserTie} iconBg="#f7f3e7" />
+        <StatsCard title="Active Salespeople" value={stats.activeSalespeople} icon={FaUserFriends} iconBg="#eaf7f0" />
+        <StatsCard title="Conversion Rate" value={stats.conversionRate} icon={FaChartLine} iconBg="#f3eaf7" />
       </div>
       <div className="dashboard-main">
         <div className="dashboard-chart-area">
@@ -83,7 +92,7 @@ const Dashboard = () => {
             <RecentActivity activities={activities} />
         </div>
       </div>
-      <EmployeesTable employees={employees} />
+      <EmployeesTable employees={employees} showStatus />
     </div>
   );
 };
