@@ -1,11 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './AddEmployeeForm.css';
 
-const AddEmployeeForm = ({ onCancel }) => {
+const AddEmployeeForm = ({ onCancel, onSave }) => {
+    const [firstName, setFirstName] = useState('Mayur');
+    const [lastName, setLastName] = useState('Rastogi');
+    const [email, setEmail] = useState('mayurrastogi46@gmail.com');
+    const [location, setLocation] = useState('Bareilly');
+    const [language, setLanguage] = useState('English');
+
     const handleSave = (e) => {
         e.preventDefault();
-        onCancel(); // For now, just close the modal
-    }
+        const newEmployee = {
+            name: `${firstName} ${lastName}`,
+            email,
+            location,
+            preferredLanguage: language,
+            assignedLeads: 0,
+            closedLeads: 0,
+            status: 'Active',
+        };
+        if (onSave) onSave(newEmployee);
+        onCancel();
+    };
 
     return (
         <div className="add-employee-form">
@@ -16,20 +32,20 @@ const AddEmployeeForm = ({ onCancel }) => {
             <form onSubmit={handleSave}>
                 <div className="form-group">
                     <label htmlFor="first-name">First name</label>
-                    <input type="text" id="first-name" defaultValue="Mayur" />
+                    <input type="text" id="first-name" value={firstName} onChange={e => setFirstName(e.target.value)} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="last-name">Last name</label>
-                    <input type="text" id="last-name" defaultValue="Rastogi" />
+                    <input type="text" id="last-name" value={lastName} onChange={e => setLastName(e.target.value)} />
                 </div>
                 <div className="form-group">
                     <label htmlFor="email">Email</label>
-                    <input type="email" id="email" defaultValue="mayurrastogi46@gmail.com" />
+                    <input type="email" id="email" value={email} onChange={e => setEmail(e.target.value)} />
                 </div>
                 <div className="form-group-row">
                     <div className="form-group">
                         <label htmlFor="location">Location</label>
-                        <select id="location" defaultValue="Bareilly">
+                        <select id="location" value={location} onChange={e => setLocation(e.target.value)}>
                             <option>Bareilly</option>
                             <option>Karnataka</option>
                             <option>California</option>
@@ -40,7 +56,7 @@ const AddEmployeeForm = ({ onCancel }) => {
                 <div className="form-group-row">
                     <div className="form-group">
                         <label htmlFor="language">Preferred Language</label>
-                        <select id="language" defaultValue="English">
+                        <select id="language" value={language} onChange={e => setLanguage(e.target.value)}>
                             <option>English</option>
                             <option>Tamil</option>
                         </select>

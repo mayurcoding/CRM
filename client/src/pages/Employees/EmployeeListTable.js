@@ -2,24 +2,23 @@ import React, { useState } from 'react';
 import './EmployeeListTable.css';
 import Pagination from '../../components/ui/Pagination';
 
-const EmployeeListTable = () => {
+const EmployeeListTable = ({ employees, setEmployees }) => {
     const [openMenuId, setOpenMenuId] = useState(null);
 
     const handleMenuToggle = (id) => {
         setOpenMenuId(openMenuId === id ? null : id);
     };
 
-    const employees = [
-        { id: 1, name: 'Tanner Finsha', email: '@tannerfisher@gmail.com', employeeId: '#23454GH6J7YT6', assignedLeads: 5, closedLeads: 2, status: 'Active' },
-        { id: 2, name: 'Emeto Winner', email: 'emetowinner@gmail.com', employeeId: '#23454GH8J7YT6', assignedLeads: 3, closedLeads: 1, status: 'Active' },
-        { id: 3, name: 'Tassy Omah', email: 'tassyomah@gmail.com', employeeId: '#23454GH6J7YT6', assignedLeads: 5, closedLeads: 0, status: 'Inactive' },
-        { id: 4, name: 'James Muriel', email: 'jamesmuriel@aerten.finance', employeeId: '#23454GH6J7YT6', assignedLeads: 2, closedLeads: 0, status: 'Inactive' },
-        { id: 5, name: 'Emeto Winner', email: 'emetowinner@gmail.com', employeeId: '#23454GH6J7YT6', assignedLeads: 1, closedLeads: 0, status: 'Inactive' },
-        { id: 6, name: 'Tassy Omah', email: 'tassyomah@gmail.com', employeeId: '#23454GH6J7YT6', assignedLeads: 8, closedLeads: 3, status: 'Active' },
-        { id: 7, name: 'James Muriel', email: 'jamesmuriel@aerten.finance', employeeId: '#23454GH6J7YT6', assignedLeads: 6, closedLeads: 4, status: 'Active' },
-        { id: 8, name: 'Emeto Winner', email: 'emetowinner@gmail.com', employeeId: '#23454GH6J7YT6', assignedLeads: 4, closedLeads: 0, status: 'Inactive' },
-    ];
-    
+    const handleEdit = (emp) => {
+        alert(`Edit employee: ${emp.name}`);
+        setOpenMenuId(null);
+    };
+
+    const handleDelete = (id) => {
+        setEmployees(employees.filter(emp => emp.id !== id));
+        setOpenMenuId(null);
+    };
+
     const getStatusClass = (status) => status === 'Active' ? 'status-active' : 'status-inactive';
     const getInitials = (name) => name.split(' ').map(n => n[0]).join('');
 
@@ -39,7 +38,7 @@ const EmployeeListTable = () => {
         </thead>
         <tbody>
           {employees.map(emp => (
-            <tr key={emp.id}>
+            <tr key={emp.id || emp._id}>
               <td><input type="checkbox" /></td>
               <td>
                 <div className="employee-info">
@@ -55,11 +54,11 @@ const EmployeeListTable = () => {
               <td>{emp.closedLeads}</td>
               <td><span className={getStatusClass(emp.status)}>{emp.status}</span></td>
               <td className="actions-cell">
-                <button className="actions-btn" onClick={() => handleMenuToggle(emp.id)}>&hellip;</button>
-                {openMenuId === emp.id && (
+                <button className="actions-btn" onClick={() => handleMenuToggle(emp.id || emp._id)}>&hellip;</button>
+                {openMenuId === (emp.id || emp._id) && (
                     <div className="actions-menu">
-                        <button><span>✏️</span> Edit</button>
-                        <button><span>🗑️</span> Delete</button>
+                        <button onClick={() => handleEdit(emp)}><span>✏️</span> Edit</button>
+                        <button onClick={() => handleDelete(emp.id || emp._id)}><span>🗑️</span> Delete</button>
                     </div>
                 )}
               </td>
