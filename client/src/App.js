@@ -14,6 +14,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<RoleSelection />} />
+        <Route path="/role-selection" element={<RoleSelection />} />
         <Route path="/employee-home" element={<EmployeeHome />} />
         <Route path="/employee-leads" element={<EmployeeLeads />} />
         <Route path="/employee-schedule" element={<EmployeeSchedule />} />

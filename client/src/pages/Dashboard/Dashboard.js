@@ -8,11 +8,51 @@ import { FaUserCheck, FaUserTie, FaUserFriends, FaChartLine } from 'react-icons/
 
 const Dashboard = () => {
   // Mock data for demonstration
+  const [employees] = useState([
+    {
+      _id: '1',
+      name: 'Tanner Finsha',
+      employeeId: '#23454GH6JYT6',
+      assignedLeads: 5,
+      closedLeads: 2,
+      status: 'Active'
+    },
+    {
+      _id: '2',
+      name: 'Emeto Winner',
+      employeeId: '#23454GH6JYT6',
+      assignedLeads: 3,
+      closedLeads: 1,
+      status: 'Active'
+    },
+    {
+      _id: '3',
+      name: 'Emeto Winner',
+      employeeId: '#23454GH6JYT6',
+      assignedLeads: 8,
+      closedLeads: 3,
+      status: 'Active'
+    },
+    {
+      _id: '4',
+      name: 'Tassy Omah',
+      employeeId: '#23454GH6JYT6',
+      assignedLeads: 6,
+      closedLeads: 4,
+      status: 'Active'
+    }
+  ]);
+
+  // Calculate conversion rate
+  const totalAssignedLeads = employees.reduce((sum, emp) => sum + (emp.assignedLeads || 0), 0);
+  const totalClosedLeads = employees.reduce((sum, emp) => sum + (emp.closedLeads || 0), 0);
+  const conversionRate = totalAssignedLeads > 0 ? ((totalClosedLeads / totalAssignedLeads) * 100).toFixed(1) + '%' : '0%';
+
   const [stats] = useState({
     unassignedLeads: '12',
     leadsAssignedThisWeek: '24',
     activeSalespeople: '5',
-    conversionRate: '32%'
+    conversionRate
   });
 
   const [analytics] = useState([
@@ -31,49 +71,6 @@ const Dashboard = () => {
     { id: 3, text: 'Admin User added new employee Maria Garcia - 3 hours ago' },
     { id: 4, text: 'Sarah Johnson updated lead status to hot - 4 hours ago' },
     { id: 5, text: 'David Chen scheduled call with Li Wei - 5 hours ago' }
-  ]);
-
-  const [employees] = useState([
-    {
-      _id: '1',
-      name: 'John Smith',
-      email: 'john.smith@canovacrm.com',
-      location: 'New York',
-      preferredLanguage: 'English',
-      assignedLeads: 5,
-      closedLeads: 2,
-      status: 'Active'
-    },
-    {
-      _id: '2',
-      name: 'Maria Garcia',
-      email: 'maria.garcia@canovacrm.com',
-      location: 'Los Angeles',
-      preferredLanguage: 'Spanish',
-      assignedLeads: 3,
-      closedLeads: 1,
-      status: 'Active'
-    },
-    {
-      _id: '3',
-      name: 'David Chen',
-      email: 'david.chen@canovacrm.com',
-      location: 'San Francisco',
-      preferredLanguage: 'Mandarin',
-      assignedLeads: 8,
-      closedLeads: 3,
-      status: 'Active'
-    },
-    {
-      _id: '4',
-      name: 'Sarah Johnson',
-      email: 'sarah.johnson@canovacrm.com',
-      location: 'Chicago',
-      preferredLanguage: 'English',
-      assignedLeads: 6,
-      closedLeads: 4,
-      status: 'Active'
-    }
   ]);
 
   return (

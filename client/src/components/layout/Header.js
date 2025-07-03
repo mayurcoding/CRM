@@ -4,9 +4,7 @@ import './Header.css';
 const Header = () => {
   return (
     <header className="header">
-      <div className="search-container">
-        <input type="text" placeholder="Search here..." />
-      </div>
+      {/* Search box removed as per design correction */}
     </header>
   );
 };

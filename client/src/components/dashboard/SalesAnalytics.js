@@ -17,16 +17,19 @@ const SalesAnalytics = ({ data = [] }) => {
     return null;
   };
 
+  // Ensure only 7-14 days are shown on the x-axis
+  const displayData = data.slice(-14); // last 14 days max
+
   return (
     <div className="sales-analytics">
       <h2>Sales Analytics</h2>
       <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={data}>
-          <XAxis dataKey="name" stroke="#8884d8" />
-          <YAxis />
+        <BarChart data={displayData}>
+          <XAxis dataKey="name" stroke="#BDBDBD" tick={{ fill: '#888', fontWeight: 500 }} />
+          <YAxis allowDecimals={false} />
           <Tooltip content={<CustomTooltip />} />
           <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <Bar dataKey="sales" fill="#667eea" barSize={30} />
+          <Bar dataKey="sales" fill="#BDBDBD" barSize={30} />
         </BarChart>
       </ResponsiveContainer>
     </div>

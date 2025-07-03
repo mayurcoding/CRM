@@ -73,6 +73,13 @@
     vertical-align: middle;
 }
 
+.employee-id-cell {
+    color: #888;
+    font-weight: 600;
+    font-size: 15px;
+    letter-spacing: 0.5px;
+}
+
 @media (max-width: 768px) {
     .employees-table-container {
         overflow-x: auto;

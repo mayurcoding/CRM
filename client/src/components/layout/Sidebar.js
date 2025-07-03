@@ -18,10 +18,8 @@ const Sidebar = () => {
             <Link to="/leads">Leads</Link>
         </li>
         <li><a href="#">Employees</a></li>
-        <li><a href="#">Settings</a></li>
       </ul>
       <div className="sidebar-footer">
-        <button className="logout-btn">Logout</button>
         <div className="profile">
             <div className="profile-avatar"></div>
             <div className="profile-info">
