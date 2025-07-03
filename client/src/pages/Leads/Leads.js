@@ -6,9 +6,14 @@ import CSVUploader from '../../components/lead/CSVUploader';
 
 const Leads = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [uploadedLeads, setUploadedLeads] = useState([]);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+
+  const handleCSVUpload = (data) => {
+    setUploadedLeads(data);
+  };
 
   return (
     <div className="leads-page">
@@ -20,9 +25,9 @@ const Leads = () => {
             <button className="add-leads-btn" onClick={openModal}>Add Leads</button>
         </div>
       </div>
-      <LeadList />
+      <LeadList leads={uploadedLeads} />
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <CSVUploader onCancel={closeModal} onNext={closeModal} />
+        <CSVUploader onCancel={closeModal} onUpload={handleCSVUpload} />
       </Modal>
     </div>
   );

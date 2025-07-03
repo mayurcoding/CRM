@@ -1,8 +1,8 @@
 import React from 'react';
 import './LeadList.css';
 
-const LeadList = () => {
-  const uploadedFiles = [
+const LeadList = ({ leads = [] }) => {
+  const uploadedFiles = leads.length > 0 ? leads : [
     {
       no: '01',
       name: 'CSV0225',
@@ -28,14 +28,14 @@ const LeadList = () => {
           </tr>
         </thead>
         <tbody>
-          {uploadedFiles.map((file) => (
-            <tr key={file.no}>
-              <td>{file.no}</td>
+          {uploadedFiles.map((file, idx) => (
+            <tr key={file.no || idx}>
+              <td>{file.no || idx + 1}</td>
               <td>{file.name}</td>
               <td>{file.date}</td>
-              <td>{file.numLeads}</td>
-              <td>{file.assignedLeads}</td>
-              <td>{file.unassignedLeads}</td>
+              <td>{file['No. of Leads'] || file.numLeads}</td>
+              <td>{file['Assigned Leads'] || file.assignedLeads}</td>
+              <td>{file['Unassigned Leads'] || file.unassignedLeads}</td>
               <td>
                 <button className="action-btn">⋮</button>
               </td>
