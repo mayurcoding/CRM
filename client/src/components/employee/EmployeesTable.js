@@ -1,7 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import './EmployeesTable.css';
 
-const EmployeesTable = ({ employees = [], showStatus }) => {
+const EmployeesTable = ({ employees = [], showStatus, onSelectionChange }) => {
+  const [selected, setSelected] = useState([]);
+
+  useEffect(() => {
+    if (onSelectionChange) {
+      onSelectionChange(selected);
+    }
+  }, [selected, onSelectionChange]);
+
+  const isAllSelected = employees.length > 0 && selected.length === employees.length;
+
+  const handleSelectAll = (e) => {
+    if (e.target.checked) {
+      setSelected(employees.map(emp => emp._id));
+    } else {
+      setSelected([]);
+    }
+  };
+
+  const handleSelect = (id) => {
+    setSelected(prev =>
+      prev.includes(id) ? prev.filter(sid => sid !== id) : [...prev, id]
+    );
+  };
+
   if (!employees || employees.length === 0) {
     return (
       <div className="employees-table-container">
@@ -18,6 +42,14 @@ const EmployeesTable = ({ employees = [], showStatus }) => {
         <table>
           <thead>
             <tr>
+              <th>
+                <input
+                  type="checkbox"
+                  checked={isAllSelected}
+                  onChange={handleSelectAll}
+                  aria-label="Select all employees"
+                />
+              </th>
               <th>Name</th>
               <th>Email</th>
               <th>Location</th>
@@ -30,6 +62,14 @@ const EmployeesTable = ({ employees = [], showStatus }) => {
           <tbody>
             {employees.map(employee => (
               <tr key={employee._id}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={selected.includes(employee._id)}
+                    onChange={() => handleSelect(employee._id)}
+                    aria-label={`Select employee ${employee.name}`}
+                  />
+                </td>
                 <td>{employee.name}</td>
                 <td>{employee.email}</td>
                 <td>{employee.location}</td>
@@ -51,4 +91,4 @@ const EmployeesTable = ({ employees = [], showStatus }) => {
   );
 };
 
-export default EmployeesTable; 
+export default EmployeesTable;

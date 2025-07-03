@@ -25,7 +25,7 @@ const Sidebar = () => {
         <div className="profile">
             <div className="profile-avatar"></div>
             <div className="profile-info">
-                <p className="profile-name">Deepak kumar</p>
+                <p className="profile-name">Mayur Rastogi</p>
                 <p className="profile-role">Admin</p>
             </div>
         </div>
@@ -34,4 +34,4 @@ const Sidebar = () => {
   );
 };
 
-export default Sidebar; 
+export default Sidebar;
